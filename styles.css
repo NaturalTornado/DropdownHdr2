@@ -6,12 +6,12 @@ header {
     background-color: #f8f9fa;
     padding: 20px;
     text-align: left;
-    position: relative;
+    position: absolute;
 }
 
 nav {
     margin-top: 10px;
-    position: relative;
+    position: absolute;
     display: inline-block;
 }
 
