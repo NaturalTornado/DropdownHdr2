@@ -1,1 +1,269 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceContractPro - Quotes</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        header img {
+            height: 40px;
+        }
+        header .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        header .user-profile img {
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        nav {
+            width: 200px;
+            background-color: black;
+            color: white;
+            height: 100%;
+            padding-top: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+        }
+        nav a {
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        nav a:hover, nav a.active {
+            background-color: yellow;
+            color: black;
+        }
+        .content {
+            margin-left: 200px;
+            margin-top: 60px;
+            padding: 20px;
+            flex-grow: 1;
+            background-color: #f0f0f0;
+        }
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .content-header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .content-header .buttons {
+            display: flex;
+            align-items: center;
+        }
+        .content-header button {
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .content-header button:hover {
+            background-color: darkblue;
+        }
+        .content-header .refresh-button {
+            padding: 10px;
+            background-color: grey;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .content-header .refresh-button:hover {
+            background-color: darkgrey;
+        }
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .edit-cell:hover {
+            cursor: text;
+            background-color: #e8f0fe;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Logo">
+        <div class="user-profile">
+            <img src="images/user-profile.jpg" alt="User Profile">
+            <span>Steve Mathewson</span>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="quotes2.html" class="active">Quotes</a>
+        <a href="projects.html">Projects</a>
+        <a href="scheduling.html">Scheduling</a>
+        <a href="invoices.html">Invoices</a>
+        <a href="clients.html">Clients</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+    <div class="content">
+        <div class="content-header">
+            <h1>Quotes</h1>
+            <div class="buttons">
+                <button onclick="createNewQuote()">Create A New Quote</button>
+                <button class="refresh-button" onclick="refreshQuotes()">&#x21bb;</button> <!-- Refresh button with arrows in a circle -->
+            </div>
+        </div>
+        <div class="table-container">
+            <table id="quotesTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Quote Number</th>
+                        <th onclick="sortTable(1)">Quote Name</th>
+                        <th onclick="sortTable(2)">Customer</th>
+                        <th onclick="sortTable(3)">Owner</th>
+                        <th onclick="sortTable(4)">Quote Value</th>
+                        <th onclick="sortTable(4)">Cost Estimate</th>
+                        <th onclick="sortTable(5)">Quote Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td class="edit-cell" contenteditable="true">Website Redesign</td>
+                        <td class="edit-cell" contenteditable="true">ACME Corp</td>
+                        <td class="edit-cell" contenteditable="true">Steve Mathewson</td>
+                        <td class="edit-cell" contenteditable="true">$5,000</td>
+                        <td class="edit-cell" contenteditable="true">$2,000</td>
+                        <td class="edit-cell" contenteditable="true">2024-06-01</td>
+                        <td>
+                            <button onclick="deleteQuote(this)">🗑️</button> <!-- Trash can button -->
+                            <a href="quote001.pdf" target="_blank">View PDF</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>002</td>
+                        <td class="edit-cell" contenteditable="true">SEO Optimization</td>
+                        <td class="edit-cell" contenteditable="true">XYZ Ltd</td>
+                        <td class="edit-cell" contenteditable="true">John Doe</td>
+                        <td class="edit-cell" contenteditable="true">$2,500</td>
+                        <td class="edit-cell" contenteditable="true">$1,000</td>
+                        <td class="edit-cell" contenteditable="true">2024-06-10</td>
+                        <td>
+                            <button onclick="deleteQuote(this)">🗑️</button> <!-- Trash can button -->
+                            <a href="quote002.pdf" target="_blank">View PDF</a>
+                        </td>
+                    </tr>
+                    <!-- Add more quotes here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let sortOrder = {};
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('quotesTable');
+            const rows = Array.from(table.rows).slice(1);
+            const currentOrder = sortOrder[columnIndex] || 'asc';
+
+            rows.sort((row1, row2) => {
+                const cell1 = row1.cells[columnIndex].innerText;
+                const cell2 = row2.cells[columnIndex].innerText;
+
+                if (currentOrder === 'asc') {
+                    return cell1 > cell2 ? 1 : -1;
+                } else {
+                    return cell1 < cell2 ? 1 : -1;
+                }
+            });
+
+            sortOrder[columnIndex] = currentOrder === 'asc' ? 'desc' : 'asc';
+
+            rows.forEach(row => table.tBodies[0].appendChild(row));
+        }
+
+        function createNewQuote() {
+            const table = document.getElementById('quotesTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td>New</td>
+                <td class="edit-cell" contenteditable="true"></td>
+                <td class="edit-cell" contenteditable="true"></td>
+                <td class="edit-cell" contenteditable="true"></td>
+                <td>$0</td>
+                <td class="edit-cell" contenteditable="true"></td>
+                <td>
+                    <button onclick="deleteQuote(this)">🗑️</button>
+                    <a href="new-quote.pdf" target="_blank">View PDF</a>
+                </td>
+            `;
+        }
+
+        function deleteQuote(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function refreshQuotes() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
+
