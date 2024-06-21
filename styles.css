@@ -11,7 +11,7 @@ header {
 
 nav {
     margin-top: 10px;
-    position: relative;
+    position: absolute;
     display: inline-block;
 }
 
